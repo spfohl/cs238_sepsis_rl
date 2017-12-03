@@ -8,3 +8,5 @@ psql -d mimic -U stephenpfohl --pset="footer=off" -A -F , -f get_inputevents_mv.
 
 psql -d mimic -U stephenpfohl --pset="footer=off" -A -F , -f get_labs_cohort.sql -o ./../data/labs_cohort.csv
 psql -d mimic -U stephenpfohl --pset="footer=off" -A -F , -f get_vitals_cohort.sql -o ./../data/vitals_cohort.csv
+
+psql -d mimic -U stephenpfohl --pset="footer=off" -A -F , -f get_demographics_cohort.sql -o ./../data/demographics_cohort.csv
