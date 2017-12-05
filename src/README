@@ -1,0 +1,8 @@
+Order to run files (I'm sorry):
+
+# Setting up the files
+create_action_space_R.ipynb
+process_vitals_labs_R.ipynb
+split_data_and_impute_R.ipynb
+prepare_df_for_tupilizing.ipynb
+generate_data_dict.ipynb
