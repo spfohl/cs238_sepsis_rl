@@ -306,6 +306,26 @@ def train_model_double(model,
     model.load_state_dict(best_model_wts)
     return performance_dict, model, best_loss, time_elapsed
 
+# Converts a performance_dict returned from a model 
+def dict_to_df(the_dict):
+    
+    df_list = []
+    for phase, phase_dict in the_dict.items():
+        
+        metrics = phase_dict.keys()
+        
+        phase_df = pd.DataFrame.from_dict(phase_dict)
+        
+        phase_df['phase'] = phase
+        
+        phase_df = phase_df.melt(id_vars = 'phase', 
+                                 value_vars = phase_dict.keys(), 
+                                 var_name = 'Metric', 
+                                 value_name = 'Performance')
+        df_list.append(phase_df)
+        
+    return(pd.concat(df_list))
+
 # Overwrites part of dataLoader code - slight modification from the PyTorch Github code
 # to account for issues with Double vs Float
 def my_collate(batch):
