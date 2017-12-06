@@ -41,6 +41,8 @@ print(use_gpu)
 data_path = '../data'
 data_dict = joblib.load(os.path.join(data_path, 'data_dict.pkl'))
 
+exp_name = 'exp2'
+
 
 # In[5]:
 
@@ -58,9 +60,9 @@ param_options = {
                   'state_dim' : [data_dict['train']['X'].shape[1]],
                   'action_dim' : [25],
                   'gamma' : [0.9],
-                  'batch_size' : [512],
+                  'batch_size' : [12],
                   'lr' : [1e-4],
-                  'num_epochs' : [300],
+                  'num_epochs' : [3],
                   'hidden_dim' : [128, 256, 512, 1024],
                   'num_hidden' : [1, 2, 3, 5, 10],
                   'drop_prob' : [0.0],
@@ -72,42 +74,7 @@ param_options = {
 config_grid = ParameterGrid(param_options)
 
 
-# In[ ]:
-
-
-# # Create a Dataset
-# train_dataset = RL_Dataset(data_dict['train']['X'], 
-#                            data_dict['train']['action'],
-#                            data_dict['train']['reward'],
-#                            transition_dict_train)
-
-# val_dataset = RL_Dataset(data_dict['val']['X'], 
-#                            data_dict['val']['action'],
-#                            data_dict['val']['reward'],
-#                            transition_dict_val)
-# # Create a dataloader
-# train_loader = DataLoader(train_dataset, 
-#                         config['batch_size'],
-#                         shuffle = True,
-#                         num_workers = 32
-#                          )
-
-# val_loader = DataLoader(val_dataset, 
-#                          config['batch_size'],
-#                          shuffle = True,
-#                          num_workers = 32
-#                          )
-
-# loaders = {'train' : train_loader,
-#            'val' : val_loader
-#           }
-
-# dset_sizes = {'train' : len(train_dataset),
-#               'val' : len(val_dataset)
-#              }
-
-
-# In[ ]:
+# In[7]:
 
 
 # Train all the models
@@ -184,7 +151,7 @@ for config in config_grid:
 
     criterion = torch.nn.SmoothL1Loss(size_average = False)
 
-    performance_dict, best_model, best_loss, time_elapsed = train_model_double(model = model, 
+    performance_dict, best_model, best_loss, time_elapsed = train_model_double_alt(model = model, 
                                                                                 target_model = target_model,
                                                                                 loaders = loaders, 
                                                                                 dset_sizes = dset_sizes, 
@@ -195,7 +162,7 @@ for config in config_grid:
                                                                                 use_gpu = use_gpu)
     
     config_str = reduce(lambda x, y: x + y + '_', [str(key) + '_' + str(value) for key, value in config.items()]) + 'time_'+ str(time.time()).split('.')[1]
-    checkpoints_path = os.path.join('../checkpoints', config_str + '.chk')
+    checkpoints_path = os.path.join('../checkpoints/' + exp_name, config_str + '.chk')
     torch.save(best_model.state_dict(), checkpoints_path)
     
     performance_df = dict_to_df(performance_dict)
@@ -203,5 +170,5 @@ for config in config_grid:
     config_df['config_str'] = config_str
     performance_df['config_str'] = config_str
     performance_df = performance_df.set_index('config_str').join(config_df.set_index('config_str'))
-    performance_df.to_csv(os.path.join('../performance/', 'performance_' + config_str + '.csv'), index = True)
+    performance_df.to_csv(os.path.join('../performance/' + exp_name, 'performance_' + config_str + '.csv'), index = True)
 
