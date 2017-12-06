@@ -283,8 +283,8 @@ def train_model_double(model,
 
             # Update the performance_dict
             performance_dict[phase]['loss'].append(epoch_loss)
-            performance_dict[phase]['value'].append(epoch_loss)
-            performance_dict[phase]['empirical_value'].append(epoch_loss)
+            performance_dict[phase]['value'].append(epoch_value)
+            performance_dict[phase]['empirical_value'].append(epoch_empirical_value)
             
             print('{} Loss: {:4f}, Best Value: {:4f}, Empirical Value: {:4f}'.format(phase, 
                                                                                      epoch_loss, 
@@ -317,8 +317,10 @@ def dict_to_df(the_dict):
         phase_df = pd.DataFrame.from_dict(phase_dict)
         
         phase_df['phase'] = phase
+        phase_df['epoch'] = np.arange(phase_df.shape[0])
         
-        phase_df = phase_df.melt(id_vars = 'phase', 
+        phase_df = phase_df.melt(
+                                id_vars = ['phase', 'epoch'], 
                                  value_vars = phase_dict.keys(), 
                                  var_name = 'Metric', 
                                  value_name = 'Performance')
