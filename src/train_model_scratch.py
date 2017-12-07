@@ -151,7 +151,7 @@ for config in config_grid:
 
     criterion = torch.nn.SmoothL1Loss(size_average = False)
 
-    performance_dict, best_model, best_loss, time_elapsed = train_model_double_alt(model = model, 
+    performance_dict, best_model, best_loss, time_elapsed = train_model_double(model = model, 
                                                                                 target_model = target_model,
                                                                                 loaders = loaders, 
                                                                                 dset_sizes = dset_sizes, 
