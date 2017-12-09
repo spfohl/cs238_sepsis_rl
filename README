@@ -1,0 +1,7 @@
+Class project repository for Stanford AA228/CS238 - Fall 2017
+
+Authors: 
+	Stephen Pfohl
+	Ben Marafino
+
+This project began as an exploration and re-implementation of the methods presented in "Continuous State-Space Models for Optimal Sepsis Treatment - a Deep Reinforcement Learning Approach" by Raghu et al. MLHC 2017. https://arxiv.org/abs/1705.08422

@@ -12,4 +12,4 @@ mortality_plot_test.ipynb
 create_action_matrix.ipynb
 
 # Contains all models and training procedures
-util.py 
+util.py
