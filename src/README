@@ -1,9 +1,15 @@
-Order to run notebook files (I'm sorry):
+Order to run notebook files (Sorry for the mess)
 
-# Setting up the files
 create_action_space_R.ipynb
 process_vitals_labs_R.ipynb
 split_data_and_impute_R.ipynb
 prepare_df_for_tupilizing.ipynb
 generate_data_dict.ipynb
-train_model_scratch.ipynb
+train_model_scratch.ipynb (or .py)
+plot_hyperparams.ipynb
+evalute_optimal_policy_test.ipynb
+mortality_plot_test.ipynb
+create_action_matrix.ipynb
+
+# Contains all models and training procedures
+util.py 
